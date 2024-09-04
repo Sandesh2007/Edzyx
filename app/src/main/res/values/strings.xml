@@ -1,0 +1,112 @@
+<resources>
+    <string name="app_name">Note_app</string>
+    <string name="image">image</string>
+    <string name="get_started">Get Started</string>
+    <string name="welcome_to_edzyx">Welcome to Edzyx</string>
+    <string name="login_with_google">Continue with Google</string>
+    <string name="or">Or</string>
+    <string name="don_t_have_an_account_sign_up">Don’t have an Account? Sign up</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="already_have_an_account_login">Already have an account? Login</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="username">Username</string>
+    <string name="signin_google">google_signin</string>
+    <string name="COntinuewithgoogle">Continue with google</string>
+    <string name="homeimage">homeimage</string>
+    <string name="get_your_notes_at_one_place">Get your notes at one place</string>
+    <string name="home">Home</string>
+    <string name="files">Files</string>
+    <string name="profile">Profile</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="lorem_ipsum">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
+        volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus
+        dui nec risus. Maecenas non sodales nisi, vel dictum dolor. Class aptent taciti sociosqu ad
+        litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse blandit eleifend
+        diam, vel rutrum tellus vulputate quis. Aliquam eget libero aliquet, imperdiet nisl a,
+        ornare ex. Sed rhoncus est ut libero porta lobortis. Fusce in dictum tellus.\n\n
+        Suspendisse interdum ornare ante. Aliquam nec cursus lorem. Morbi id magna felis. Vivamus
+        egestas, est a condimentum egestas, turpis nisl iaculis ipsum, in dictum tellus dolor sed
+        neque. Morbi tellus erat, dapibus ut sem a, iaculis tincidunt dui. Interdum et malesuada
+        fames ac ante ipsum primis in faucibus. Curabitur et eros porttitor, ultricies urna vitae,
+        molestie nibh. Phasellus at commodo eros, non aliquet metus. Sed maximus nisl nec dolor
+        bibendum, vel congue leo egestas.\n\n
+        Sed interdum tortor nibh, in sagittis risus mollis quis. Curabitur mi odio, condimentum sit
+        amet auctor at, mollis non turpis. Nullam pretium libero vestibulum, finibus orci vel,
+        molestie quam. Fusce blandit tincidunt nulla, quis sollicitudin libero facilisis et. Integer
+        interdum nunc ligula, et fermentum metus hendrerit id. Vestibulum lectus felis, dictum at
+        lacinia sit amet, tristique id quam. Cras eu consequat dui. Suspendisse sodales nunc ligula,
+        in lobortis sem porta sed. Integer id ultrices magna, in luctus elit. Sed a pellentesque
+        est.\n\n
+        Aenean nunc velit, lacinia sed dolor sed, ultrices viverra nulla. Etiam a venenatis nibh.
+        Morbi laoreet, tortor sed facilisis varius, nibh orci rhoncus nulla, id elementum leo dui
+        non lorem. Nam mollis ipsum quis auctor varius. Quisque elementum eu libero sed commodo. In
+        eros nisl, imperdiet vel imperdiet et, scelerisque a mauris. Pellentesque varius ex nunc,
+        quis imperdiet eros placerat ac. Duis finibus orci et est auctor tincidunt. Sed non viverra
+        ipsum. Nunc quis augue egestas, cursus lorem at, molestie sem. Morbi a consectetur ipsum, a
+        placerat diam. Etiam vulputate dignissim convallis. Integer faucibus mauris sit amet finibus
+        convallis.\n\n
+        Phasellus in aliquet mi. Pellentesque habitant morbi tristique senectus et netus et
+        malesuada fames ac turpis egestas. In volutpat arcu ut felis sagittis, in finibus massa
+        gravida. Pellentesque id tellus orci. Integer dictum, lorem sed efficitur ullamcorper,
+        libero justo consectetur ipsum, in mollis nisl ex sed nisl. Donec maximus ullamcorper
+        sodales. Praesent bibendum rhoncus tellus nec feugiat. In a ornare nulla. Donec rhoncus
+        libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
+        vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
+    </string>
+    <string name="gender">Gender</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="log_out">Log Out</string>
+    <string name="display_name">[Display Name]</string>
+    <string name="user_image">User Image</string>
+    <string name="email_">[Email]</string>
+    <string name="status">Status:</string>
+    <string name="not_verified">✘ Not Verified</string>
+    <string name="success">Success!</string>
+    <string name="error">Error!</string>
+    <string name="verified">✔ Verified</string>
+    <string name="change_profile_image">Change profile image</string>
+    <string name="update_username">Update username</string>
+    <string name="change_password">Change password</string>
+    <string name="change_username">Change username</string>
+    <string name="CHange_usrnma">Change username</string>
+    <string name="new_username">New username</string>
+    <string name="new_password">New password</string>
+    <string name="change_profile">Change profile</string>
+    <string name="delete_account">Delete account</string>
+    <string name="are_you_sure">Are you sure ?</string>
+    <string name="type_yes_to_delete_profile">Type your password to continue</string>
+    <string name="delete_account_not_working">Delete_account (not working)</string>
+    <string name="hellow">Hellow</string>
+    <string name="upload_pdf_to_server">Upload pdf to server</string>
+    <string name="upload">Upload</string>
+    <string name="pdf_name">PDF NAME</string>
+    <string name="help_click_on_the_pdf_image_to_select_the_file_to_upload">Help : click on the upload to select the pdf to upload.</string>
+    <string name="pdf">Pdf</string>
+    <string name="set_name_for_selected_pdf_file">set name for selected pdf file</string>
+    <string name="edzyx">Note app v2</string>
+    <string name="help">Help</string>
+    <string name="failed_to_load_content">Failed to load content.</string>
+    <string name="loading">Loading...</string>
+    <string name="we_missed_you_login_to_get_started">We missed you! Login to get started.</string>
+    <string name="someone_gmail_com">someone@gmail.com</string>
+    <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="register">Register</string>
+    <string name="welcome_back">Welcome Back</string>
+    <string name="make_sure_you_have_verified_yout_email_before_logging_in">Verify your email before logging in.</string>
+    <string name="access_all_the_pdf_pptx_notes_by_just_creating_an_account">Access all the pdf/pptx notes by just creating an account.</string>
+    <string name="welcome">Welcome</string>
+    <string name="login1">login</string>
+    <string name="already_have_an_account">Already have an account ?</string>
+</resources>

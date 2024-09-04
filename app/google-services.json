@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "865149925342",
+    "project_id": "note-app-a0808",
+    "storage_bucket": "note-app-a0808.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:865149925342:android:bb65cbe4783568231f0f4f",
+        "android_client_info": {
+          "package_name": "com.sandesh.note_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjznm_rxqNsQV0sOGfpxyu31s0SRLbHcY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

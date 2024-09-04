@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="primary_bg_light">#343A40</color>
+    <color name="secondary_bg_light">#292929</color>
+    <color name="primary_text_light">#F8F9FA</color>
+    <color name="secondary_text">#F8F9FA</color>
+    <color name="button_clr">#6C757D</color>
+    <color name="border_light">#ADB5BD</color>
+    <color name="nav_light"> #393839</color>
+    <color name="text_for_inputs"> #000</color>
+    <color name="red"> #ff2f3b</color>
+    <color name="white"> #292929</color>
+    <color name="success_color">#2EFF1C </color>
+    <color name="text_clr"> #000</color>
+</resources>

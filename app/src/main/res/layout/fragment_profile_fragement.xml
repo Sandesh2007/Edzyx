@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/swipe_refresh_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProfileFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/primary_bg_light"
+        android:padding="16dp">
+
+        <!-- Header -->
+        <TextView
+            android:id="@+id/header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/profile"
+            android:textSize="24sp"
+            android:fontFamily="@font/jetbrainsmono"
+            android:textColor="@color/primary_text_light"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/profile_card"
+            android:layout_marginBottom="8dp"
+
+        />
+        <!-- Profile Card -->
+        <LinearLayout
+            android:id="@+id/profile_card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_box"
+            android:elevation="4dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp"
+            app:layout_constraintBottom_toBottomOf="@id/header"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/header">
+
+            <!-- Profile Image -->
+            <ImageView
+                android:id="@+id/profile_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginBottom="8dp"
+                android:clipToOutline="true"
+                android:src="@drawable/profile_image"
+                android:background="@drawable/rounded_box"
+                android:contentDescription="@string/user_image"
+                android:scaleType="centerCrop" />
+
+            <!-- Display Name -->
+            <EditText
+                android:id="@+id/username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/rounded_box"
+                android:editable="false"
+                android:fontFamily="@font/jetbrainsmono"
+                android:hint="@string/display_name"
+                android:inputType="textNoSuggestions"
+                android:textColor="@color/primary_text_light"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <!-- Email -->
+            <EditText
+                android:id="@+id/email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/rounded_box"
+                android:editable="false"
+                android:fontFamily="@font/jetbrainsmono"
+                android:hint="@string/email_"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/primary_text_light"
+                android:textSize="14sp" />
+
+            <!-- Status -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/jetbrainsmono"
+                    android:text="@string/status"
+                    android:textColor="@color/primary_text_light"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/verification_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/rounded_box"
+                    android:editable="false"
+                    android:fontFamily="@font/jetbrainsmono"
+                    android:hint="@string/not_verified"
+                    android:inputType="text"
+                    android:textColorHint="@color/red"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/edit_profile_button"
+                android:layout_width="185dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/button_clr"
+                android:fontFamily="@font/jetbrainsmono"
+                android:padding="16dp"
+                android:text="@string/edit_profile"
+                android:textColor="@color/secondary_text"
+                app:layout_constraintBottom_toTopOf="@id/logout" />
+
+            <!-- Logout Button -->
+            <Button
+                android:id="@+id/logout"
+                android:layout_width="190dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="@color/button_clr"
+                android:fontFamily="@font/jetbrainsmono"
+                android:padding="16dp"
+                android:text="@string/log_out"
+                android:textColor="@color/secondary_text" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

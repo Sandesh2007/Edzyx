@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Light Mode Colors -->
+    <color name="primary_bg_light">#F8F9FB</color>
+    <color name="secondary_bg_light">#ADB5BD</color>
+    <color name="primary_text_light">#212529</color>
+    <color name="secondary_text">#F8F9FA</color>
+    <color name="button_clr">#343A40</color>
+    <color name="border_light">#E9ECEF</color>
+    <color name="nav_light"> #f4ffff</color>
+    <color name="text_for_inputs"> #000</color>
+    <color name="red"> #ff2f3b</color>
+    <color name="white"> #ffffff</color>
+    <color name="success_color">#2EFF1C </color>
+    <color name="text_clr"> #fff</color>
+
+
+</resources>

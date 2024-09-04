@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipeRefreshLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Edit_profile">
+
+    <ScrollView
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="3dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/top_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:fontFamily="@font/jetbrainsmono"
+                android:text="@string/edit_profile"
+                android:textSize="24sp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/c_profile" />
+
+            <ImageView
+                android:id="@+id/c_profile"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="32dp"
+                android:background="@drawable/rounded_box"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/top_txt"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <Button
+                android:id="@+id/u_profile"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="@color/button_clr"
+                android:padding="16dp"
+                android:text="@string/change_profile"
+                android:textColor="@color/secondary_text"
+                app:layout_constraintTop_toBottomOf="@+id/c_profile"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <!-- Change Username Section -->
+            <TextView
+                android:id="@+id/change_usrname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:layout_marginTop="32dp"
+                android:focusable="true"
+                android:fontFamily="@font/jetbrainsmono"
+                android:text="@string/change_username"
+                android:textColor="@color/primary_text_light"
+                android:textSize="20sp"
+                app:layout_constraintTop_toBottomOf="@+id/u_profile"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <EditText
+                android:id="@+id/new_username"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:background="@drawable/rounded_edittext"
+                android:fontFamily="@font/jetbrainsmono"
+                android:hint="@string/new_username"
+                android:inputType="text"
+                android:padding="16dp"
+                android:textColor="@color/text_for_inputs"
+                android:textColorHint="#8a8a8a"
+                app:layout_constraintTop_toBottomOf="@+id/change_usrname"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <Button
+                android:id="@+id/c_username"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="@color/button_clr"
+                android:padding="16dp"
+                android:text="@string/change_username"
+                android:textColor="@color/secondary_text"
+                app:layout_constraintTop_toBottomOf="@+id/new_username"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <!-- Change Password Section -->
+            <TextView
+                android:id="@+id/change_pswd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:focusable="true"
+                android:fontFamily="@font/jetbrainsmono"
+                android:text="@string/change_password"
+                android:clickable="true"
+                android:textSize="20sp"
+                android:textColor="@color/primary_text_light"
+                app:layout_constraintTop_toBottomOf="@+id/c_username"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <EditText
+                android:id="@+id/new_password"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:background="@drawable/rounded_edittext"
+                android:fontFamily="@font/jetbrainsmono"
+                android:hint="@string/new_password"
+                android:inputType="textPassword"
+                android:padding="16dp"
+                android:textColor="@color/text_for_inputs"
+                android:textColorHint="#8a8a8a"
+                app:layout_constraintTop_toBottomOf="@+id/change_pswd"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <EditText
+                android:id="@+id/re_password"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:background="@drawable/rounded_edittext"
+                android:fontFamily="@font/jetbrainsmono"
+                android:hint="@string/confirm_password"
+                android:inputType="textPassword"
+                android:padding="16dp"
+                android:textColor="@color/text_for_inputs"
+                android:textColorHint="#8a8a8a"
+                app:layout_constraintTop_toBottomOf="@+id/new_password"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <Button
+                android:id="@+id/c_passwd"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="@color/button_clr"
+                android:padding="16dp"
+                android:text="@string/change_password"
+                android:textColor="@color/secondary_text"
+                app:layout_constraintTop_toBottomOf="@+id/re_password"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+
+            <!-- Components to delete porfile           -->
+            <TextView
+                android:id="@+id/delete_acc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:focusable="true"
+                android:fontFamily="@font/jetbrainsmono"
+                android:text="@string/delete_account_not_working"
+                android:clickable="true"
+                android:textSize="20sp"
+                android:textColor="@color/primary_text_light"
+                app:layout_constraintTop_toBottomOf="@+id/c_passwd"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/verify_delete_acc_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:focusable="true"
+                android:fontFamily="@font/jetbrainsmono"
+                android:text="@string/type_yes_to_delete_profile"
+                android:clickable="true"
+                android:textSize="20sp"
+                android:textColor="@color/primary_text_light"
+                app:layout_constraintTop_toBottomOf="@+id/delete_acc"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <Button
+                android:id="@+id/delete_acc_btn"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="@color/button_clr"
+                android:padding="16dp"
+                android:text="@string/delete_account"
+                android:textColor="@color/secondary_text"
+                app:layout_constraintTop_toBottomOf="@+id/verify_delete_acc"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <EditText
+                android:id="@+id/verify_delete_acc"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:background="@drawable/rounded_edittext"
+                android:fontFamily="@font/jetbrainsmono"
+                android:hint="@string/are_you_sure"
+                android:inputType="textPassword"
+                android:padding="16dp"
+                android:textColor="@color/text_for_inputs"
+                android:textColorHint="#8a8a8a"
+                app:layout_constraintTop_toBottomOf="@+id/verify_delete_acc_txt"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
