@@ -18,6 +18,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <Button
+                android:id="@+id/about"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="284dp"
+                android:backgroundTint="@color/button_clr"
+                android:text="@string/about"
+                android:textColor="@color/secondary_text"
+                app:layout_constraintBottom_toTopOf="@+id/new_username"
+                app:layout_constraintEnd_toStartOf="@+id/top_txt">
+
+            </Button>
+
             <TextView
                 android:id="@+id/top_txt"
                 android:layout_width="wrap_content"

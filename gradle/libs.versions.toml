@@ -22,6 +22,7 @@ playServicesAuth = "20.0.0"
 playServicesAuthVersion = "21.2.0"
 firebaseStorage = "21.0.0"
 swiperefreshlayout = "1.1.0"
+volley = "1.2.1"
 
 [libraries]
 app-update = { module = "com.google.android.play:app-update", version.ref = "appUpdate" }
@@ -45,6 +46,7 @@ picasso = { module = "com.squareup.picasso:picasso", version.ref = "picasso" }
 picasso-v28 = { module = "com.squareup.picasso:picasso", version.ref = "picassoVersion" }
 play-services-auth-v2000 = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }
 swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swiperefreshlayout" }
+volley = { module = "com.android.volley:volley", version.ref = "volley" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

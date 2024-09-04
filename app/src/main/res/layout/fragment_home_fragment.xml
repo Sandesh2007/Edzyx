@@ -6,6 +6,7 @@
     android:background="@color/primary_bg_light"
     tools:context=".home_fragment">
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

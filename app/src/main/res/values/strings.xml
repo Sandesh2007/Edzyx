@@ -109,4 +109,13 @@
     <string name="welcome">Welcome</string>
     <string name="login1">login</string>
     <string name="already_have_an_account">Already have an account ?</string>
+    <string name="about">About</string>
+    <string name="maintainer_sandesh_sharma">Maintainer: Sandesh Sharma</string>
+    <string name="links">Links:</string>
+    <string name="facebook">Facebook</string>
+    <string name="instagram">Instagram</string>
+    <string name="bug_crash_report">Bug/Crash Report:</string>
+    <string name="github">GitHub</string>
+    <string name="check_for_update">Check for Update</string>
+    <string name="about_the_app_app_description_goes_here">About the app: [App description goes here]</string>
 </resources>

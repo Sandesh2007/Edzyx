@@ -50,7 +50,7 @@ public class Edit_profile extends AppCompatActivity {
     private ImageView profile;
     private TextView change_passed, changeusername ,delete_acc,verify_delete_acc_txt;
     private EditText n_username, n_passwd, r_passwd,verify_delete_acc;
-    private Button Change_username, change_password,uploadprofile,delete_acc_btn;
+    private Button Change_username, change_password,uploadprofile,delete_acc_btn,about;
     private  Uri uriImage;
     private SwipeRefreshLayout swipeRefreshLayout;
 
@@ -92,6 +92,7 @@ public class Edit_profile extends AppCompatActivity {
         verify_delete_acc_txt = findViewById(R.id.verify_delete_acc_txt);
         verify_delete_acc = findViewById(R.id.verify_delete_acc);
         delete_acc_btn = findViewById(R.id.delete_acc_btn);
+        about = findViewById(R.id.about);
 
         uploadprofile = findViewById(R.id.u_profile);
         changeusername = findViewById(R.id.change_usrname);
@@ -114,8 +115,15 @@ public class Edit_profile extends AppCompatActivity {
         change_password.setVisibility(View.GONE);
 
 
+        about.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Edit_profile.this,about.class);
+                startActivity(intent);
+            }
+        });
 
-        // Delete acc
+        // Delete acc ( will be removed )
         delete_acc.setOnClickListener(view -> {
             if(verify_delete_acc_txt.getVisibility() == View.GONE) {
                 // Show verification UI
