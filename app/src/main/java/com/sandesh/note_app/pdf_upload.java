@@ -6,16 +6,18 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
+//import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+//import androidx.core.graphics.Insets;
+//import androidx.core.view.ViewCompat;
+//import androidx.core.view.WindowInsetsCompat;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -30,25 +32,29 @@ public class pdf_upload extends AppCompatActivity {
     StorageReference storageReference;
     DatabaseReference databaseReference;
 
+    Spinner referenceSpinner;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_pdf_upload);
 
         imageView = findViewById(R.id.imageView);
         upload_btn = findViewById(R.id.upload_btn);
+        referenceSpinner = findViewById(R.id.reference_spinner);  // Initialize Spinner
+
+        // References in Firebase
+        String[] references = getResources().getStringArray(R.array.pdf_references);
+
+        // Set Spinner with references
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, references);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        referenceSpinner.setAdapter(spinnerAdapter);
 
         storageReference = FirebaseStorage.getInstance().getReference();
-        databaseReference = FirebaseDatabase.getInstance().getReference("pdf_uploads");
+        databaseReference = FirebaseDatabase.getInstance().getReference();
 
         upload_btn.setOnClickListener(view -> select_pdf());
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
     }
 
     private void select_pdf() {
@@ -57,8 +63,10 @@ public class pdf_upload extends AppCompatActivity {
         intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[] {
                 "application/pdf",
                 "application/vnd.ms-powerpoint",  // MIME type for .ppt
-                "application/vnd.openxmlformats-officedocument.presentationml.presentation"  // MIME type for .pptx
-        });        intent.setAction(Intent.ACTION_GET_CONTENT);
+                "application/vnd.openxmlformats-officedocument.presentationml.presentation",  // MIME type for .pptx
+                "application/vnd.google-apps.document"  // MIME type for Google Docs
+        });
+        intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select PDF/PPT file"), 1);
     }
 
@@ -70,6 +78,7 @@ public class pdf_upload extends AppCompatActivity {
         }
     }
 
+
     private void uploadPdfFile(Uri data) {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Uploading...");
@@ -80,7 +89,11 @@ public class pdf_upload extends AppCompatActivity {
             fileName = System.currentTimeMillis() + ".pdf";
         }
 
-        StorageReference reference = storageReference.child("pdf_uploads/" + fileName);
+        // Get selected reference from the spinner
+        String selectedReference = referenceSpinner.getSelectedItem().toString();
+
+        // Use the selected reference in the Firebase path
+        StorageReference reference = storageReference.child(selectedReference + "/" + fileName);
 
         String finalFileName = fileName;
         reference.putFile(data).addOnSuccessListener(taskSnapshot -> {
@@ -90,7 +103,8 @@ public class pdf_upload extends AppCompatActivity {
 
                 uploadPdf uploadPdf = new uploadPdf(finalFileName, uri.toString(), uploadedDate, size);
 
-                databaseReference.child(Objects.requireNonNull(databaseReference.push().getKey()))
+                // Store metadata under the selected reference
+                databaseReference.child(selectedReference).child(Objects.requireNonNull(databaseReference.push().getKey()))
                         .setValue(uploadPdf)
                         .addOnCompleteListener(task -> {
                             progressDialog.dismiss();

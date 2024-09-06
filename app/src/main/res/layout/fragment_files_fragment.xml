@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,6 +6,7 @@
     android:layout_gravity="center"
     tools:context=".files_fragment">
 
+    <!-- Search bar for filtering files -->
     <SearchView
         android:id="@+id/search_view"
         android:layout_width="match_parent"
@@ -16,6 +16,18 @@
         android:layout_alignParentTop="true"
         android:layout_margin="8dp" />
 
+    <!-- Spinner for selecting reference (e.g., class) -->
+    <Spinner
+        android:id="@+id/reference_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search_view"
+        android:layout_margin="8dp"
+        android:background="@drawable/rounded_box"
+        android:backgroundTint="@color/secondary_bg_light"
+        android:spinnerMode="dropdown" />
+
+    <!-- Button to upload files -->
     <Button
         android:id="@+id/upload_btn"
         android:backgroundTint="@color/button_clr"
@@ -24,9 +36,10 @@
         android:layout_alignParentEnd="true"
         android:textColor="@color/secondary_text"
         android:text="@string/upload"
-        android:layout_below="@id/search_view"
+        android:layout_below="@id/reference_spinner"
         android:layout_marginTop="8dp" />
 
+    <!-- List of PDF files -->
     <ListView
         android:id="@+id/pdf_list"
         android:backgroundTint="@color/primary_bg_light"

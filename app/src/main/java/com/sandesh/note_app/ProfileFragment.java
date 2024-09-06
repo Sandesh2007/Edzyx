@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,8 +20,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
-import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -38,12 +35,11 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Objects;
 
 public class ProfileFragment extends Fragment {
 
     TextView textUsername, textEmail ,textVerification;
-    String username,user_email,verified;
+//    String username,user_email,verified;
     ImageView uproile_image;
      Button editProfile, logoutBtn ,change_profile,change_passed,changeusername;
      FirebaseAuth profile_Auth;
@@ -70,32 +66,24 @@ public class ProfileFragment extends Fragment {
         swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
 
 
-        swipeRefreshLayout.setOnRefreshListener(() -> {
-            refreshProfileData();
+        swipeRefreshLayout.setOnRefreshListener(this::refreshProfileData);
+
+
+        editProfile.setOnClickListener(view12 -> {
+            Intent intent = new Intent(getContext(), Edit_profile.class);
+            startActivity(intent);
         });
+        logoutBtn.setOnClickListener(view1 -> {
+            profile_Auth.signOut();
+            clearUserCache();
 
+            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+            fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            Intent intent = new Intent(requireActivity(), signup.class);
+            startActivity(intent);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            requireActivity().finish();
 
-        editProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), Edit_profile.class);
-                startActivity(intent);
-            }
-        });
-        logoutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                profile_Auth.signOut();
-                clearUserCache();
-
-                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                Intent intent = new Intent(requireActivity(), signup.class);
-                startActivity(intent);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                requireActivity().finish();
-
-            }
         });
 
         // Check email verification and show Toast
@@ -193,6 +181,7 @@ public class ProfileFragment extends Fragment {
                                         .placeholder(R.drawable.profile_image) // Placeholder image
                                         .error(R.drawable.profile_image) // Error image
                                         .into(uproile_image);
+                                refreshProfileImage(); //remove this if any bug//
                             } else {
                                 uproile_image.setImageResource(R.drawable.profile_image); // Default image
                             }
@@ -242,7 +231,6 @@ public class ProfileFragment extends Fragment {
     }
 
 
-
     //    This will clear the cache if user logs out
     private void clearUserCache() {
         File file = new File(requireContext().getCacheDir(), CACHE_FILE_NAME);
@@ -268,7 +256,7 @@ public void refreshProfileImage() {
         if (photoUri != null) {
             Picasso.get().load(photoUri).into(uproile_image);
         } else {
-            uproile_image.setImageResource(R.drawable.ic_launcher_foreground); // Replace with your default image
+            uproile_image.setImageResource(R.drawable.profile_image); // Replace with your default image
         }
     }
 }

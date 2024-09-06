@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Note_app</string>
+    <string name="app_name">Edzyx</string>
     <string name="image">image</string>
     <string name="get_started">Get Started</string>
     <string name="welcome_to_edzyx">Welcome to Edzyx</string>
@@ -118,4 +118,10 @@
     <string name="github">GitHub</string>
     <string name="check_for_update">Check for Update</string>
     <string name="about_the_app_app_description_goes_here">About the app: [App description goes here]</string>
+    <string name="issue">Issue</string>
+
+    <string-array name="pdf_references">
+        <item>Class 11</item>
+        <item>Class 12</item>
+    </string-array>
 </resources>

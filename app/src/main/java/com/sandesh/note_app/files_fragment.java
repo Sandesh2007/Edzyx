@@ -14,11 +14,13 @@ import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 //import android.widget.TextClock;
 import android.widget.SearchView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 //import android.widget.TextView;
@@ -45,50 +47,48 @@ public class files_fragment extends Fragment {
     ArrayAdapter<String> adapter;
     List<String> fileNames;
 
+    Spinner referenceSpinner;
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        if (pdf_list != null) {
-            pdf_list.setOnItemClickListener((adapterView, view1, i, l) -> {
-                uploadPdf uploadPdf = uploadPDFS.get(i);
-                Intent intent = new Intent(Intent.ACTION_VIEW).setData(Uri.parse(uploadPdf.getUrl()));
-                startActivity(intent);
-            });
-        }
-
-        viewAllFiles();
-
-        FirebaseApp.initializeApp(requireContext());
-        FirebaseAppCheck.getInstance().installAppCheckProviderFactory(
-                PlayIntegrityAppCheckProviderFactory.getInstance()
-        );
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_files_fragment, container, false);
 
-        // Initialize ListView and SearchView
+        // Initialize ListView, Spinner, and SearchView
         pdf_list = view.findViewById(R.id.pdf_list);
         search_view = view.findViewById(R.id.search_view);
+        referenceSpinner = view.findViewById(R.id.reference_spinner);
+        upload_btn = view.findViewById(R.id.upload_btn);
 
         uploadPDFS = new ArrayList<>();
         fileNames = new ArrayList<>();
-        upload_btn = view.findViewById(R.id.upload_btn);
 
-        upload_btn.setOnClickListener(view12 -> {
-            Intent intent = new Intent(getContext(), pdf_upload.class);
-            startActivity(intent);
+        upload_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), pdf_upload.class);
+                startActivity(intent);
+            }
         });
 
-        if (pdf_list != null) {
-            pdf_list.setOnItemClickListener((adapterView, view1, i, l) -> {
-                uploadPdf uploadPdf = uploadPDFS.get(i);
-                Intent intent = new Intent(Intent.ACTION_VIEW).setData(Uri.parse(uploadPdf.getUrl()));
-                startActivity(intent);
-            });
-        }
+        // Set up Spinner for references
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.pdf_references));
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        referenceSpinner.setAdapter(spinnerAdapter);
 
-        viewAllFiles();
+        // Load files based on selected reference
+        referenceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                String selectedReference = adapterView.getItemAtPosition(position).toString();
+                viewAllFiles(selectedReference);  // Pass selected reference to method
+            }
 
-        // Implement the search filter functionality
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                // Handle case when nothing is selected
+            }
+        });
+
         search_view.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -107,8 +107,9 @@ public class files_fragment extends Fragment {
         return view;
     }
 
-    private void viewAllFiles() {
-        databaseReference = FirebaseDatabase.getInstance().getReference("pdf_uploads");
+    // Modified viewAllFiles method to accept a reference and load files from that path
+    private void viewAllFiles(String reference) {
+        databaseReference = FirebaseDatabase.getInstance().getReference(reference);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -142,6 +143,7 @@ public class files_fragment extends Fragment {
 
                 pdf_list.setAdapter(adapter);
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 if (isAdded() && getActivity() != null) {
@@ -150,4 +152,5 @@ public class files_fragment extends Fragment {
             }
         });
     }
+
 }

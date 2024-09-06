@@ -129,7 +129,7 @@
                     android:textColor="@color/primary_text_light"
                     android:textSize="14sp"
                     android:text="@string/forgot_password"
-                    android:fontFamily="@font/seg_ui_semibold"
+                    android:fontFamily="@font/segoe_ui_bold"
                     android:layout_marginStart="12dp"
                     android:layout_weight="1" />
                 <Button
