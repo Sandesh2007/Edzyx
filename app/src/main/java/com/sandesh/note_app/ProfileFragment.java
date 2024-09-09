@@ -64,7 +64,8 @@ public class ProfileFragment extends Fragment {
         editProfile = view.findViewById(R.id.edit_profile_button);
         logoutBtn = view.findViewById(R.id.logout);
         swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
-
+        textUsername.setFocusable(false);
+        textEmail.setFocusable(false);
 
         swipeRefreshLayout.setOnRefreshListener(this::refreshProfileData);
 

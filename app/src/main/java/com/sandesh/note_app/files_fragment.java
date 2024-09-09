@@ -1,33 +1,23 @@
 package com.sandesh.note_app;
 
 import android.content.Intent;
-//import android.graphics.Color;
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
-//import android.widget.TextClock;
-import android.widget.SearchView;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
-//import android.widget.TextView;
 
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.appcheck.FirebaseAppCheck;
-import com.google.firebase.appcheck.playintegrity.PlayIntegrityAppCheckProviderFactory;
+import android.widget.Spinner;
+import android.widget.Toast;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -36,11 +26,11 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-//import java.util.Objects;
 
 public class files_fragment extends Fragment {
     Button upload_btn;
-    ListView pdf_list;
+    RecyclerView pdfRecyclerView;
+    PdfAdapter pdfAdapter;
     SearchView search_view;
     DatabaseReference databaseReference;
     List<uploadPdf> uploadPDFS;
@@ -54,7 +44,7 @@ public class files_fragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_files_fragment, container, false);
 
         // Initialize ListView, Spinner, and SearchView
-        pdf_list = view.findViewById(R.id.pdf_list);
+        pdfRecyclerView = view.findViewById(R.id.pdf_recycler_view);
         search_view = view.findViewById(R.id.search_view);
         referenceSpinner = view.findViewById(R.id.reference_spinner);
         upload_btn = view.findViewById(R.id.upload_btn);
@@ -62,12 +52,14 @@ public class files_fragment extends Fragment {
         uploadPDFS = new ArrayList<>();
         fileNames = new ArrayList<>();
 
-        upload_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), pdf_upload.class);
-                startActivity(intent);
-            }
+        pdfRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+
+        View parentLayout = view.findViewById(R.id.parent_layout);
+        parentLayout.setOnClickListener(view1 -> search_view.clearFocus());
+        upload_btn.setOnClickListener(view12 -> {
+            Intent intent = new Intent(getContext(), pdf_upload.class);
+            startActivity(intent);
         });
 
         // Set up Spinner for references
@@ -85,7 +77,7 @@ public class files_fragment extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                // Handle case when nothing is selected
+                // nothing is selected.
             }
         });
 
@@ -97,8 +89,17 @@ public class files_fragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if (adapter != null) {
-                    adapter.getFilter().filter(newText);
+                // Implement filter functionality for RecyclerView
+                if (pdfAdapter != null) {
+                    List<uploadPdf> filteredList = new ArrayList<>();
+                    for (uploadPdf item : uploadPDFS) {
+                        if (item.getName().toLowerCase().contains(newText.toLowerCase())) {
+                            filteredList.add(item);  // Filter based on the name of the PDF
+                        }
+                    }
+                    // Pass the filtered list of uploadPdf objects to the adapter
+                    pdfAdapter = new PdfAdapter(getContext(), filteredList);
+                    pdfRecyclerView.setAdapter(pdfAdapter);
                 }
                 return false;
             }
@@ -118,30 +119,17 @@ public class files_fragment extends Fragment {
                 }
 
                 uploadPDFS.clear();
-                fileNames.clear();
 
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                     uploadPdf uploadPdf = postSnapshot.getValue(uploadPdf.class);
                     if (uploadPdf != null) {
-                        uploadPDFS.add(uploadPdf);
-
-                        String fileName = uploadPdf.getName();
-                        String fileSize = android.text.format.Formatter.formatShortFileSize(requireContext(), uploadPdf.getSize());
-                        String uploadedDate = DateFormat.format("dd/MM/yyyy", uploadPdf.getUploadedDate()).toString();
-
-                        String displayText = fileName + "\nSize: " + fileSize + "\nUploaded: " + uploadedDate;
-                        fileNames.add(displayText);
+                        uploadPDFS.add(uploadPdf);  // Add the entire uploadPdf object
                     }
                 }
 
-                adapter = new ArrayAdapter<>(
-                        requireContext(),
-                        R.layout.list_item,
-                        R.id.text_item,
-                        fileNames
-                );
-
-                pdf_list.setAdapter(adapter);
+                // Pass the list of uploadPdf objects to the PdfAdapter
+                pdfAdapter = new PdfAdapter(requireContext(), uploadPDFS);
+                pdfRecyclerView.setAdapter(pdfAdapter);
             }
 
             @Override
@@ -152,5 +140,8 @@ public class files_fragment extends Fragment {
             }
         });
     }
+
+
+
 
 }

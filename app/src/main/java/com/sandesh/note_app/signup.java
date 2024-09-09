@@ -1,13 +1,17 @@
 package com.sandesh.note_app;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
 import android.text.TextUtils;
 import android.util.Patterns;
 
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,7 +41,7 @@ public class signup extends AppCompatActivity {
 
 //    ActivityMainBinding binding;
 
-//    Button google_signup;
+    ImageView google_signup;
     Button signupbtn;
     TextView backtolog;
     EditText text_registername,getText_registeremail,getText_registerpasswd;
@@ -59,9 +63,15 @@ public class signup extends AppCompatActivity {
 //        setContentView(binding.getRoot());
         //Buttons
         signupbtn=findViewById(R.id.signUpButton);
-//        google_signup=findViewById(R.id.googleSignUpButton);
+        google_signup=findViewById(R.id.google_signup_btn);
 
 
+        google_signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showCustomToast(signup.this,"Comming soon...");
+            }
+        });
 
         //This button is to sent user back to signup page/activity
         backtolog = findViewById(R.id.backtolog);
@@ -155,25 +165,24 @@ public class signup extends AppCompatActivity {
                         if (task1.isSuccessful()) {
                             // Send verification email
                             firebaseUser.sendEmailVerification();
-
-                            Toast.makeText(signup.this, "User registered successfully", Toast.LENGTH_SHORT).show();
+                            showCustomToast(signup.this,"User registered successfully");
 
                             Intent intent = new Intent(signup.this, home.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
                             finish();
                         } else {
-                            Toast.makeText(signup.this, "Error while registering user", Toast.LENGTH_SHORT).show();
+                            showCustomToast(signup.this,"Error while registering user");
                         }
                     });
                 }
             } else {
                 // Check if the exception is due to the user already existing
                 if (task.getException() instanceof FirebaseAuthUserCollisionException) {
-                    Toast.makeText(signup.this, "User already exists. Please log in.", Toast.LENGTH_LONG).show();
+                    showCustomToast(signup.this,"User already exists. Please log in.");
                 } else {
                     // Handle other errors
-                    Toast.makeText(signup.this, "Registration failed: " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_LONG).show();
+                    showCustomToast(signup.this,"Registration failed: " + Objects.requireNonNull(task.getException()).getMessage());
                 }
             }
         });
@@ -186,17 +195,35 @@ public class signup extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-
-                    Toast.makeText(signup.this, "Username already used", Toast.LENGTH_SHORT).show();
+                    showCustomToast(signup.this,"Username already used");
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 // Handle possible errors
-                Toast.makeText(signup.this, "Failed to check username", Toast.LENGTH_SHORT).show();
+                showCustomToast(signup.this,"Failed to check username");
             }
         });
+    }
+
+    private void showCustomToast(Context context, String message) {
+        // Inflate the custom toast layout
+        LayoutInflater inflater = getLayoutInflater();
+        View toastLayout = inflater.inflate(R.layout.custom_toast, findViewById(R.id.custm_toast));
+
+        // Set the text and image in the custom toast layout
+        TextView toastText = toastLayout.findViewById(R.id.toast_text);
+//        ImageView toastImage = toastLayout.findViewById(R.id.toast_image);
+
+        toastText.setText(message);
+//        toastImage.setImageResource(R.drawable.google); // Set your desired image
+
+        // Create and display the toast
+        Toast toast = new Toast(context);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(toastLayout); // Set custom view
+        toast.show();
     }
 
 }

@@ -12,65 +12,80 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="84dp"
-        android:layout_marginBottom="772dp"
         android:fontFamily="@font/jetbrainsmono"
         android:text="@string/upload_pdf_to_server"
         android:textColor="@color/primary_text_light"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"/>
+
+    <!-- Label for the spinner -->
+    <TextView
+        android:id="@+id/upload_to_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/jetbrainsmono"
+        android:text="Upload file to:"
+        android:textColor="@color/primary_text_light"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/reference_spinner"
+        android:layout_marginTop="32dp"
+        android:layout_marginStart="16dp"/>
 
     <!-- Spinner to select the reference (e.g., class) -->
 
     <!-- ImageView representing the file selection -->
-
     <Spinner
         android:id="@+id/reference_spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="60dp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.092"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/upload_to_label"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="288dp"
         android:layout_height="319dp"
-        android:layout_marginEnd="60dp"
-        android:layout_marginBottom="428dp"
+        android:layout_marginTop="32dp"
         android:contentDescription="@string/pdf"
         android:src="@drawable/pdf"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/reference_spinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <!-- Button to upload the selected PDF -->
     <Button
         android:id="@+id/upload_btn"
         android:layout_width="190dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="108dp"
-        android:layout_marginBottom="328dp"
+        android:layout_marginTop="32dp"
         android:backgroundTint="@color/button_clr"
         android:fontFamily="@font/jetbrainsmono"
         android:padding="16dp"
         android:text="@string/upload"
         android:textColor="@color/secondary_text"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <!-- Help note for file selection guidance -->
     <TextView
         android:id="@+id/note"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="19dp"
+        android:layout_marginBottom="16dp"
         android:fontFamily="@font/jetbrainsmono"
         android:padding="10dp"
         android:text="@string/help_click_on_the_pdf_image_to_select_the_file_to_upload"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

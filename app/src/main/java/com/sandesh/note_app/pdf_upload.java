@@ -1,15 +1,19 @@
 package com.sandesh.note_app;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 //import androidx.activity.EdgeToEdge;
@@ -109,7 +113,7 @@ public class pdf_upload extends AppCompatActivity {
                         .addOnCompleteListener(task -> {
                             progressDialog.dismiss();
                             if (task.isSuccessful()) {
-                                Toast.makeText(pdf_upload.this, "Uploaded file successfully", Toast.LENGTH_SHORT).show();
+                                showCustomToast(pdf_upload.this,"Uploaded file successfully");
                             } else {
                                 Toast.makeText(pdf_upload.this, "Failed to upload file", Toast.LENGTH_SHORT).show();
                             }
@@ -150,4 +154,23 @@ public class pdf_upload extends AppCompatActivity {
         }
         return fileName;
     }
+    private void showCustomToast(Context context, String message) {
+        // Inflate the custom toast layout
+        LayoutInflater inflater = getLayoutInflater();
+        View toastLayout = inflater.inflate(R.layout.custom_toast, findViewById(R.id.custm_toast));
+
+        // Set the text and image in the custom toast layout
+        TextView toastText = toastLayout.findViewById(R.id.toast_text);
+//        ImageView toastImage = toastLayout.findViewById(R.id.toast_image);
+
+        toastText.setText(message);
+//        toastImage.setImageResource(R.drawable.google); // Set your desired image
+
+        // Create and display the toast
+        Toast toast = new Toast(context);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(toastLayout); // Set custom view
+        toast.show();
+    }
+
 }

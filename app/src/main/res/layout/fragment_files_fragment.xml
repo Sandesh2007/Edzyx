@@ -1,26 +1,32 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/parent_layout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/primary_bg_light"
     android:layout_height="match_parent"
     android:layout_gravity="center"
     tools:context=".files_fragment">
 
     <!-- Search bar for filtering files -->
-    <SearchView
+    <androidx.appcompat.widget.SearchView
         android:id="@+id/search_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/rounded_box"
         android:queryHint="Search files..."
+        style="@style/CustomSearchView"
+        android:background="@drawable/search_view"
         android:layout_alignParentTop="true"
+        android:focusable="true"
+        android:clickable="true"
+        app:iconifiedByDefault="false"
         android:layout_margin="8dp" />
 
     <!-- Spinner for selecting reference (e.g., class) -->
     <Spinner
         android:id="@+id/reference_spinner"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_below="@id/search_view"
         android:layout_margin="8dp"
         android:background="@drawable/rounded_box"
@@ -40,15 +46,13 @@
         android:layout_marginTop="8dp" />
 
     <!-- List of PDF files -->
-    <ListView
-        android:id="@+id/pdf_list"
-        android:backgroundTint="@color/primary_bg_light"
-        android:cacheColorHint="@color/primary_bg_light"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/pdf_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/rounded_box"
+        android:layout_height="wrap_content"
         android:padding="10dp"
         android:layout_below="@id/upload_btn"
         android:layout_marginTop="8dp" />
+
 
 </RelativeLayout>

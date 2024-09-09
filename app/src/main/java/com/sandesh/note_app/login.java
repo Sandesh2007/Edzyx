@@ -1,20 +1,21 @@
 package com.sandesh.note_app;
 
-import android.content.DialogInterface;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Patterns;
 
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -22,16 +23,14 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
 
 
 public class login extends AppCompatActivity {
 
-    Button loginbtn,google_login_btn;
+    Button loginbtn;
+    ImageView google_login_btn;
     EditText text_email,text_passord;
     TextView backtosign,forgot_passwd;
   FirebaseAuth firebaseAuth;
@@ -49,11 +48,13 @@ public class login extends AppCompatActivity {
         //Buttons
         loginbtn = findViewById(R.id.loginButton);
         forgot_passwd = findViewById(R.id.forgotPassword);
-//        google_login_btn = findViewById(R.id.googleLoginButton);
+        google_login_btn = findViewById(R.id.google_login_btn);
 
         //Inputs
         text_email=findViewById(R.id.email);
         text_passord=findViewById(R.id.password);
+
+        google_login_btn.setOnClickListener(view -> showCustomToast(login.this,"Comming soon..."));
 
 //        Forgot password
         forgot_passwd.setOnClickListener(view -> {
@@ -71,7 +72,6 @@ public class login extends AppCompatActivity {
                 String email = resetMail.getText().toString();
                 if (TextUtils.isEmpty(email)) {
                     resetMail.setError("Email is required!");
-                    Toast.makeText(login.this, "Email is required", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -83,9 +83,9 @@ public class login extends AppCompatActivity {
                         if (emailExists) {
                             // If email exists, send the password reset email
                             firebaseAuth.sendPasswordResetEmail(email).addOnSuccessListener(unused -> {
-                                Toast.makeText(login.this, "Reset link is sent to " + email + ".", Toast.LENGTH_SHORT).show();
+                                showCustomToast(login.this,"Reset link is sent to " + email + ".");
                             }).addOnFailureListener(e -> {
-                                Toast.makeText(login.this, "Failed to send reset link: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                showCustomToast(login.this,"Failed to send reset link: " + e.getMessage());
                             });
                         } else {
                             // Email does not exist in Firebase
@@ -156,6 +156,7 @@ public class login extends AppCompatActivity {
                             // User is signed in and email is verified
                             Intent intent = new Intent(this, home.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            showCustomToast(login.this,"logged in 24sucessfully.");
                             startActivity(intent);
                             finish();
                         } else {
@@ -167,6 +168,25 @@ public class login extends AppCompatActivity {
                         Toast.makeText(login.this, "Authentication failed: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
+    }
+
+    private void showCustomToast(Context context, String message) {
+        // Inflate the custom toast layout
+        LayoutInflater inflater = getLayoutInflater();
+        View toastLayout = inflater.inflate(R.layout.custom_toast, findViewById(R.id.custm_toast));
+
+        // Set the text and image in the custom toast layout
+        TextView toastText = toastLayout.findViewById(R.id.toast_text);
+//        ImageView toastImage = toastLayout.findViewById(R.id.toast_image);
+
+        toastText.setText(message);
+//        toastImage.setImageResource(R.drawable.google); // Set your desired image
+
+        // Create and display the toast
+        Toast toast = new Toast(context);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(toastLayout); // Set custom view
+        toast.show();
     }
 
 }

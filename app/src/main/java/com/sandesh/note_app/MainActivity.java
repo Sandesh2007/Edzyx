@@ -45,8 +45,6 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, home.class);
             startActivity(intent);
             finish(); // Close MainActivity so user can't navigate back to it
-        } else {
-            Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
         }
         // Apply WindowInsets to the view
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {

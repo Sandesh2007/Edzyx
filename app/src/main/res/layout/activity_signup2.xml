@@ -161,13 +161,14 @@
             </LinearLayout>
         </LinearLayout>
         <ImageView
+            android:id="@+id/google_signup_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/welcome"
             android:src="@drawable/google"
             android:background="@drawable/rounded_box"
             android:backgroundTint="@color/primary_bg_light"
-            android:layout_below="@id/txt"
+            android:layout_above="@id/acc_txt"
             android:layout_marginStart="180dp"
             android:layout_marginTop="40dp"
             android:layout_marginBottom="10dp"
@@ -175,6 +176,7 @@
 
         </ImageView>
         <LinearLayout
+            android:id="@+id/acc_txt"
             android:layout_marginBottom="26dp"
             android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"

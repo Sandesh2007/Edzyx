@@ -1,6 +1,7 @@
 package com.sandesh.note_app;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
@@ -12,11 +13,11 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.firebase.BuildConfig;
 
 import org.json.JSONException;
 
 public class about extends AppCompatActivity {
+    String C_versionName;
 
     private static final String VERSION_URL = "https://github.com/Sandesh2007/Edzyx/raw/main/version.json";
 
@@ -24,6 +25,15 @@ public class about extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
+
+        // Display the current app version
+        try {
+           C_versionName = getApplicationContext().getPackageManager().getPackageInfo(getApplicationContext().getPackageName(), 0).versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        TextView currentVersion = findViewById(R.id.current_version);
+        currentVersion.setText("Current Version: " + "v"+C_versionName);
 
         // Facebook Link
         TextView facebookLink = findViewById(R.id.facebook_link);
@@ -66,9 +76,7 @@ public class about extends AppCompatActivity {
                         String latestVersion = response.getString("version");
                         String apkUrl = response.getString("apk_url");
 
-                        String currentVersion = BuildConfig.VERSION_NAME;
-
-                        if (!currentVersion.equals(latestVersion)) {
+                        if (!C_versionName.equals(latestVersion)) {
                             promptUpdate(apkUrl);
                         } else {
                             // No update available
