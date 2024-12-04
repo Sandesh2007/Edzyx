@@ -1,38 +1,46 @@
 [versions]
-agp = "8.6.0"
+agp = "8.7.0"
 appUpdate = "2.1.0"
+colorpickerview = "2.2.4"
 core = "4.2.0"
 firebaseAppcheckPlayintegrity = "18.0.0"
+firebaseBom = "33.3.0"
+gson = "2.10.1"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 appcompat = "1.7.0"
+lottie = "6.5.2"
 markwon = "4.6.2"
 material = "1.12.0"
-activity = "1.9.1"
+activity = "1.9.2"
 constraintlayout = "2.1.4"
-navigationFragment = "2.6.0"
-navigationUi = "2.8.0"
+navigationFragment = "2.8.1"
+navigationUi = "2.8.1"
 googleGmsGoogleServices = "4.4.2"
 firebaseAuth = "23.0.0"
 firebaseDatabase = "21.0.0"
-picasso = "(insert latest version)"
 picassoVersion = "2.8"
-playServicesAuth = "20.0.0"
+playServicesAuth = "21.2.0"
 playServicesAuthVersion = "21.2.0"
 firebaseStorage = "21.0.0"
 swiperefreshlayout = "1.1.0"
 volley = "1.2.1"
+firebaseMessaging = "24.0.2"
 
 [libraries]
 app-update = { module = "com.google.android.play:app-update", version.ref = "appUpdate" }
+colorpickerview = { module = "com.github.skydoves:colorpickerview", version.ref = "colorpickerview" }
 core = { module = "io.noties.markwon:core", version.ref = "core" }
 firebase-appcheck-playintegrity = { module = "com.google.firebase:firebase-appcheck-playintegrity", version.ref = "firebaseAppcheckPlayintegrity" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 gms-play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuthVersion" }
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+lottie = { module = "com.airbnb.android:lottie", version.ref = "lottie" }
 markwon = { module = "io.noties:markwon", version.ref = "markwon" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
@@ -42,11 +50,11 @@ navigation-ui = { group = "androidx.navigation", name = "navigation-ui", version
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
 firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
 firebase-storage = { group = "com.google.firebase", name = "firebase-storage", version.ref = "firebaseStorage" }
-picasso = { module = "com.squareup.picasso:picasso", version.ref = "picasso" }
 picasso-v28 = { module = "com.squareup.picasso:picasso", version.ref = "picassoVersion" }
 play-services-auth-v2000 = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }
 swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swiperefreshlayout" }
 volley = { module = "com.android.volley:volley", version.ref = "volley" }
+firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging", version.ref = "firebaseMessaging" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -1,0 +1,49 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/parent_layout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/primary_bg_light"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    tools:context=".pdf_admin">
+
+    <!-- Search bar for filtering files -->
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/search_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:queryHint="Search files..."
+        style="@style/CustomSearchView"
+        android:background="@drawable/search_view"
+        android:layout_alignParentTop="true"
+        android:focusable="true"
+        android:clickable="true"
+        app:iconifiedByDefault="false"
+        android:layout_margin="8dp" />
+
+    <!-- Spinner for selecting reference (e.g., class) -->
+    <Spinner
+        android:id="@+id/reference_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/search_view"
+        android:layout_margin="8dp"
+        android:background="@drawable/rounded_box"
+        android:backgroundTint="@color/secondary_bg_light"
+        android:spinnerMode="dropdown" />
+
+    <!-- List of PDF files -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/pdf_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_below="@id/reference_spinner"
+        android:layout_marginTop="8dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
+
+    <!-- Delete Button -->
+
+</RelativeLayout>

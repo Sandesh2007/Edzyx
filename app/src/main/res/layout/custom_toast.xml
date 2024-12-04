@@ -1,19 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/custm_toast"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:background="@drawable/rounded_box"
     android:padding="8dp">
 
-
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/toast_anim"
+        android:layout_width="40sp"
+        android:layout_height="30sp"
+        app:lottie_rawRes="@raw/alert_anim"
+        android:visibility="gone"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="false"
+        />
     <TextView
         android:id="@+id/toast_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/welcome"
+        android:layout_marginTop="5sp"
         android:fontFamily="@font/seg_ui_semibold"
-        android:textColor="@android:color/white"
-        android:textSize="16sp" />
+        android:textColor="@color/primary_text_light"
+        android:textSize="12sp" />
 </LinearLayout>

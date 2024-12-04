@@ -18,6 +18,7 @@ public class PdfAdapter extends RecyclerView.Adapter<PdfAdapter.PdfViewHolder> {
     private Context context;
     private List<uploadPdf> uploadPDFS;
 
+
     public PdfAdapter(Context context, List<uploadPdf> uploadPDFS) {
         this.context = context;
         this.uploadPDFS = uploadPDFS;

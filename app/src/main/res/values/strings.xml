@@ -26,9 +26,6 @@
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
         volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus
@@ -65,6 +62,8 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
     <string name="gender">Gender</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="log_out">Log Out</string>
@@ -92,10 +91,10 @@
     <string name="upload_pdf_to_server">Upload pdf to server</string>
     <string name="upload">Upload</string>
     <string name="pdf_name">PDF NAME</string>
-    <string name="help_click_on_the_pdf_image_to_select_the_file_to_upload">Help : click on the upload to select the pdf to upload.</string>
+    <string name="help_click_on_the_pdf_image_to_select_the_file_to_upload">Help : Click on the upload to select the pdf to upload.</string>
     <string name="pdf">Pdf</string>
     <string name="set_name_for_selected_pdf_file">set name for selected pdf file</string>
-    <string name="edzyx">Note app v2</string>
+    <string name="edzyx">Welcome</string>
     <string name="help">Help</string>
     <string name="failed_to_load_content">Failed to load content.</string>
     <string name="loading">Loading...</string>
@@ -117,9 +116,37 @@
     <string name="bug_crash_report">Bug/Crash Report:</string>
     <string name="github">GitHub</string>
     <string name="check_for_update">Check for Update</string>
-    <string name="about_the_app_app_description_goes_here">About the app: [App description goes here]</string>
     <string name="issue">Issue</string>
-    <string name="current_version">Current version:</string>
+    <string name="current_version">Current version: </string>
+    <string name="update_info">» Added new features and bug fixes.</string>
+    <string name="update_available">A new version of the app is available. Would you like to update ?</string>
+    <string name="admin">Admin</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="don_t_show_again">Don\'t show again</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="light_mode">Light Mode</string>
+    <string name="please_check_your_internet_connection_and_try_again">Please check your internet connection and try again.</string>
+    <string name="no_internet_connection">No Internet Connection</string>
+    <string name="retry">Retry</string>
+    <string name="no_internet">No Internet !!!</string>
+    <string name="pdf_admin">Pdf Admin</string>
+    <string name="delete">Delete</string>
+    <string name="settings">Settings</string>
+    <string name="system_default">System Default</string>
+    <string name="themes">Themes</string>
+    <string name="default_web_client_id">865149925342-v92c7fu74d0kc0dr9fe0ib2c2c1559h8.apps.googleusercontent.com</string>
+    <string name="home_app_solgan">Edzyx is a minimal note sharing app made specially for book nerds.</string>
+    <string name="pick_color">Select button color [Beta]</string>
+    <string name="error_title">Error Title</string>
+    <string name="error_fix">Error Fix</string>
+    <string name="help_err">Help: If you get any error open a issue at github with error message.</string>
+    <string name="upload_file_to">Upload file to:</string>
+    <string name="uploading">Uploading...</string>
+    <string name="help_profile">Help : Click on the Rectangle box to select profile image.</string>
+    <string name="please_enter_valid_details">Please enter valid details.</string>
+    <string name="enter_your_email">Enter your email</string>
+    <string name="send">Send</string>
 
     <string-array name="pdf_references">
         <item>Class 11</item>

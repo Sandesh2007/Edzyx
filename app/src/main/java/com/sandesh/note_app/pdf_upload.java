@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -23,6 +24,7 @@ import androidx.appcompat.app.AppCompatActivity;
 //import androidx.core.view.ViewCompat;
 //import androidx.core.view.WindowInsetsCompat;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -45,7 +47,7 @@ public class pdf_upload extends AppCompatActivity {
 
         imageView = findViewById(R.id.imageView);
         upload_btn = findViewById(R.id.upload_btn);
-        referenceSpinner = findViewById(R.id.reference_spinner);  // Initialize Spinner
+        referenceSpinner = findViewById(R.id.reference_spinner);
 
         // References in Firebase
         String[] references = getResources().getStringArray(R.array.pdf_references);
@@ -66,9 +68,9 @@ public class pdf_upload extends AppCompatActivity {
         intent.setType("*/*");
         intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[] {
                 "application/pdf",
-                "application/vnd.ms-powerpoint",  // MIME type for .ppt
-                "application/vnd.openxmlformats-officedocument.presentationml.presentation",  // MIME type for .pptx
-                "application/vnd.google-apps.document"  // MIME type for Google Docs
+                "application/vnd.ms-powerpoint",
+                "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+                "application/vnd.google-apps.document"
         });
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select PDF/PPT file"), 1);
@@ -84,50 +86,59 @@ public class pdf_upload extends AppCompatActivity {
 
 
     private void uploadPdfFile(Uri data) {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Uploading...");
-        progressDialog.show();
+        CustomProgressDialog customProgressDialog = new CustomProgressDialog(this);
 
         String fileName = getFileName(data);
         if (fileName == null) {
             fileName = System.currentTimeMillis() + ".pdf";
         }
 
-        // Get selected reference from the spinner
         String selectedReference = referenceSpinner.getSelectedItem().toString();
-
-        // Use the selected reference in the Firebase path
         StorageReference reference = storageReference.child(selectedReference + "/" + fileName);
 
-        String finalFileName = fileName;
-        reference.putFile(data).addOnSuccessListener(taskSnapshot -> {
-            taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(uri -> {
-                long uploadedDate = System.currentTimeMillis();
-                long size = taskSnapshot.getTotalByteCount(); // Get file size
+        // Check if the file already exists in Firebase Storage
+        String finalFileName1 = fileName;
+        reference.getDownloadUrl().addOnSuccessListener(uri -> {
+            // If the file exists, show a toast and do not proceed with the upload
+            showCustomToast(pdf_upload.this, "File already exsits in the storage!!");
+        }).addOnFailureListener(exception -> {
+            // File does not exist, proceed with the upload
+            customProgressDialog.show();
 
-                uploadPdf uploadPdf = new uploadPdf(finalFileName, uri.toString(), uploadedDate, size);
+            String finalFileName = finalFileName1;
+            reference.putFile(data).addOnSuccessListener(taskSnapshot -> {
+                taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(uri1 -> {
+                    long uploadedDate = System.currentTimeMillis();
+                    long size = taskSnapshot.getTotalByteCount();
+                    uploadPdf uploadPdf = new uploadPdf(finalFileName, uri1.toString(), uploadedDate, size);
 
-                // Store metadata under the selected reference
-                databaseReference.child(selectedReference).child(Objects.requireNonNull(databaseReference.push().getKey()))
-                        .setValue(uploadPdf)
-                        .addOnCompleteListener(task -> {
-                            progressDialog.dismiss();
-                            if (task.isSuccessful()) {
-                                showCustomToast(pdf_upload.this,"Uploaded file successfully");
-                            } else {
-                                Toast.makeText(pdf_upload.this, "Failed to upload file", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                    databaseReference.child(selectedReference).child(Objects.requireNonNull(databaseReference.push().getKey()))
+                            .setValue(uploadPdf)
+                            .addOnCompleteListener(task -> {
+                                if (task.isSuccessful()) {
+                                    showCustomToast(pdf_upload.this, "Uploaded file successfully");
+                                    customProgressDialog.changeAnimation(R.raw.done_anim,()->{
+                                        Log.d("Animation ended","Animation ended di it ");
+                                    });
+                                }else {
+                                    showCustomToast(pdf_upload.this, "Failed to upload file");
+                                }
+                            });
+                }).addOnFailureListener(e -> {
+                    customProgressDialog.dismiss();
+                    showCustomToast(pdf_upload.this, "Failed to get download URL");
+                });
             }).addOnFailureListener(e -> {
-                progressDialog.dismiss();
-                Toast.makeText(pdf_upload.this, "Failed to get download URL", Toast.LENGTH_SHORT).show();
+                customProgressDialog.dismiss();
+                showCustomToast(pdf_upload.this, "Failed to upload file");
+            }).addOnProgressListener(snapshot -> {
+                long bytesTransferred = snapshot.getBytesTransferred();
+                long totalBytes = snapshot.getTotalByteCount();
+                double progress = (100.0 * bytesTransferred) / totalBytes;
+
+                // Update the progress in the custom progress dialog with both percentage and bytes transferred
+                customProgressDialog.setProgress((int) progress, bytesTransferred, totalBytes);
             });
-        }).addOnFailureListener(e -> {
-            progressDialog.dismiss();
-            Toast.makeText(pdf_upload.this, "Failed to upload file", Toast.LENGTH_SHORT).show();
-        }).addOnProgressListener(snapshot -> {
-            double progress = (100.0 * snapshot.getBytesTransferred()) / snapshot.getTotalByteCount();
-            progressDialog.setMessage("Uploaded: " + (int) progress + "%");
         });
     }
 
@@ -155,20 +166,14 @@ public class pdf_upload extends AppCompatActivity {
         return fileName;
     }
     private void showCustomToast(Context context, String message) {
-        // Inflate the custom toast layout
         LayoutInflater inflater = getLayoutInflater();
         View toastLayout = inflater.inflate(R.layout.custom_toast, findViewById(R.id.custm_toast));
 
-        // Set the text and image in the custom toast layout
         TextView toastText = toastLayout.findViewById(R.id.toast_text);
-//        ImageView toastImage = toastLayout.findViewById(R.id.toast_image);
 
         toastText.setText(message);
-//        toastImage.setImageResource(R.drawable.google); // Set your desired image
-
-        // Create and display the toast
         Toast toast = new Toast(context);
-        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setDuration(Toast.LENGTH_SHORT);
         toast.setView(toastLayout); // Set custom view
         toast.show();
     }

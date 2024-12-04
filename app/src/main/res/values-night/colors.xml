@@ -6,11 +6,13 @@
     <color name="primary_text_light">#F8F9FA</color>
     <color name="secondary_text">#F8F9FA</color>
     <color name="button_clr">#6C757D</color>
+    <color name="button_clr1">#6C757D</color>
     <color name="border_light">#ADB5BD</color>
     <color name="nav_light"> #393839</color>
     <color name="text_for_inputs"> #000</color>
     <color name="red"> #ff2f3b</color>
     <color name="white"> #292929</color>
     <color name="success_color">#2EFF1C </color>
+    <color name="success_color1">#008fff </color>
     <color name="text_clr"> #000</color>
 </resources>

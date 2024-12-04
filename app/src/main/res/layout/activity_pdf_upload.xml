@@ -1,13 +1,13 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primary_bg_light"
+    android:padding="16dp"
     tools:context=".pdf_upload">
 
-    <!-- Title text for PDF upload page -->
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
@@ -16,76 +16,64 @@
         android:text="@string/upload_pdf_to_server"
         android:textColor="@color/primary_text_light"
         android:textSize="20sp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="16dp"/>
 
-    <!-- Label for the spinner -->
     <TextView
         android:id="@+id/upload_to_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/jetbrainsmono"
-        android:text="Upload file to:"
+        android:text="@string/upload_file_to"
         android:textColor="@color/primary_text_light"
         android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@+id/title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/reference_spinner"
+        android:layout_below="@id/title"
         android:layout_marginTop="32dp"
-        android:layout_marginStart="16dp"/>
+        android:layout_marginStart="40dp"
+        android:layout_alignParentStart="true"/>
 
-    <!-- Spinner to select the reference (e.g., class) -->
-
-    <!-- ImageView representing the file selection -->
     <Spinner
         android:id="@+id/reference_spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/upload_to_label"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
+        android:layout_below="@id/title"
+        android:layout_toEndOf="@id/upload_to_label"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"/>
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="288dp"
         android:layout_height="319dp"
-        android:layout_marginTop="32dp"
+        android:layout_below="@id/reference_spinner"
         android:contentDescription="@string/pdf"
         android:src="@drawable/pdf"
-        app:layout_constraintTop_toBottomOf="@+id/reference_spinner"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="30dp"
+        />
 
-    <!-- Button to upload the selected PDF -->
     <Button
         android:id="@+id/upload_btn"
         android:layout_width="190dp"
         android:layout_height="wrap_content"
+        android:layout_below="@id/imageView"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="32dp"
         android:backgroundTint="@color/button_clr"
         android:fontFamily="@font/jetbrainsmono"
         android:padding="16dp"
         android:text="@string/upload"
-        android:textColor="@color/secondary_text"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        android:textColor="@color/secondary_text"/>
 
-    <!-- Help note for file selection guidance -->
     <TextView
         android:id="@+id/note"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_marginBottom="16dp"
         android:fontFamily="@font/jetbrainsmono"
         android:padding="10dp"
         android:text="@string/help_click_on_the_pdf_image_to_select_the_file_to_upload"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_centerHorizontal="true"/>
+</RelativeLayout>

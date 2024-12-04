@@ -124,7 +124,8 @@
                 android:backgroundTint="@color/button_clr"
                 android:fontFamily="@font/jetbrainsmono"
                 android:padding="16dp"
-                android:text="@string/edit_profile"
+                android:drawableStart="@drawable/settings"
+                android:text="@string/settings"
                 android:textColor="@color/secondary_text"
                 app:layout_constraintBottom_toTopOf="@id/logout" />
 
@@ -134,8 +135,9 @@
                 android:layout_width="190dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:backgroundTint="@color/button_clr"
+                android:backgroundTint="#c1121f"
                 android:fontFamily="@font/jetbrainsmono"
+                android:drawableStart="@drawable/logout"
                 android:padding="16dp"
                 android:text="@string/log_out"
                 android:textColor="@color/secondary_text" />

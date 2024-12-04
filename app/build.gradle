@@ -11,8 +11,8 @@ android {
         applicationId "com.sandesh.note_app"
         minSdk 24
         targetSdk 34
-        versionCode 3
-        versionName "1.4"
+        versionCode 4
+        versionName "1.5"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -40,6 +40,8 @@ dependencies {
     implementation libs.volley
     implementation libs.constraintlayout
     implementation libs.navigation.fragment
+    implementation libs.colorpickerview
+    implementation libs.gson
     implementation libs.navigation.ui
     implementation libs.firebase.auth
     implementation(libs.gms.play.services.auth)
@@ -51,8 +53,10 @@ dependencies {
     implementation libs.play.services.auth.v2000
     implementation libs.app.update
     implementation libs.core
+    implementation libs.lottie
+    implementation libs.firebase.messaging
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
-
+    implementation(platform(libs.firebase.bom))
 }

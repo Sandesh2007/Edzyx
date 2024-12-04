@@ -1,10 +1,15 @@
 package com.sandesh.note_app;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,7 +22,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -36,7 +45,7 @@ public class files_fragment extends Fragment {
     List<uploadPdf> uploadPDFS;
     ArrayAdapter<String> adapter;
     List<String> fileNames;
-
+    FirebaseAuth userAuth;
     Spinner referenceSpinner;
 
     @Override
@@ -53,6 +62,10 @@ public class files_fragment extends Fragment {
         fileNames = new ArrayList<>();
 
         pdfRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        if (!isNetworkAvailable()) {
+            showNoInternetDialog();
+        }
 
 
         View parentLayout = view.findViewById(R.id.parent_layout);
@@ -105,7 +118,44 @@ public class files_fragment extends Fragment {
             }
         });
 
+
+        // Donot allow user to upload file if not verified.
+        userAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = userAuth.getCurrentUser();
+        if (user != null) if (!user.isEmailVerified()) {
+            upload_btn.setOnClickListener(view13 -> showCustomToast(getContext(), "Please verify your email to upload files!!","error"));
+        }
+
+//      Donot allow user to upload file if version is less than 1.4 .
+        try {
+            // Get the current app version
+            String C_versionName = getContext().getPackageManager().getPackageInfo(getContext().getPackageName(), 0).versionName;
+
+            // Define the minimum required version
+            String min_version = "1.4";
+
+            // Compare the current version with the minimum version
+            if (!(C_versionName.compareTo(min_version) >= 0)) {
+                upload_btn.setOnClickListener(view14 -> showCustomToast(getContext(),"Update app to upload files!!","error"));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+
+
         return view;
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager cm = (ConnectivityManager) requireContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        return activeNetwork != null && activeNetwork.isConnected();
+    }
+
+    private void showNoInternetDialog() {
+        NoInternetDialogFragment dialog = new NoInternetDialogFragment();
+        dialog.show(getParentFragmentManager(), "NoInternetDialog");
     }
 
     // Modified viewAllFiles method to accept a reference and load files from that path
@@ -135,13 +185,39 @@ public class files_fragment extends Fragment {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 if (isAdded() && getActivity() != null) {
-                    Toast.makeText(getActivity(), "Error loading files", Toast.LENGTH_SHORT).show();
+                    showCustomToast(getContext(), "Error: " + error.getMessage(), "error");
                 }
             }
         });
     }
 
+    private void showCustomToast(Context context, String message, String messageType) {
+        // Inflate the custom toast layout
+        LayoutInflater inflater = getLayoutInflater();
+        View toastLayout = inflater.inflate(R.layout.custom_toast, getView().findViewById(R.id.custm_toast));
 
+        // Set the text in the custom toast layout
+        TextView toastText = toastLayout.findViewById(R.id.toast_text);
+        toastText.setText(message);
 
+        // Set the text color based on the message type
+        switch (messageType.toLowerCase()) {
+            case "error":
+                toastText.setTextColor(ContextCompat.getColor(context, R.color.red));
+                break;
+            case "success":
+                toastText.setTextColor(ContextCompat.getColor(context, R.color.success_color));
+                break;
+            default:
+                toastText.setTextColor(ContextCompat.getColor(context, R.color.white));
+                break;
+        }
+
+        // Create and display the toast
+        Toast toast = new Toast(context);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(toastLayout); // Set custom view
+        toast.show();
+    }
 
 }

@@ -1,10 +1,11 @@
-// Dang this and Profile frgment took a lot of time whole 3 days ;(
+// Dang this and Profile fragment took a lot of time whole 2 weeks to complete ;(
 
 package com.sandesh.note_app;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -27,6 +28,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
@@ -53,6 +56,8 @@ public class Edit_profile extends AppCompatActivity {
     private Button Change_username, change_password,uploadprofile,delete_acc_btn,about;
     private  Uri uriImage;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
 
     FirebaseAuth auth;
     StorageReference storageReference;
@@ -65,10 +70,9 @@ public class Edit_profile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_edit_profile);
-
+        
         profile = findViewById(R.id.c_profile);
 
-        // Initialize SwipeRefreshLayout
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
 
         // Call the method to refresh data
@@ -92,7 +96,9 @@ public class Edit_profile extends AppCompatActivity {
         verify_delete_acc_txt = findViewById(R.id.verify_delete_acc_txt);
         verify_delete_acc = findViewById(R.id.verify_delete_acc);
         delete_acc_btn = findViewById(R.id.delete_acc_btn);
-        about = findViewById(R.id.about);
+        sharedPreferences = getSharedPreferences("ThemePrefs", MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
 
         uploadprofile = findViewById(R.id.u_profile);
         changeusername = findViewById(R.id.change_usrname);
@@ -113,15 +119,6 @@ public class Edit_profile extends AppCompatActivity {
         r_passwd.setVisibility(View.GONE);
         Change_username.setVisibility(View.GONE);
         change_password.setVisibility(View.GONE);
-
-
-        about.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Edit_profile.this,about.class);
-                startActivity(intent);
-            }
-        });
 
         // Delete acc ( will be removed )
         delete_acc.setOnClickListener(view -> {
@@ -146,7 +143,7 @@ public class Edit_profile extends AppCompatActivity {
                             delete_acc_btn.setEnabled(true);
                             deleteUserData(user);
                         } else {
-                            Toast.makeText(Edit_profile.this, "Authentication failed. Please try again.", Toast.LENGTH_SHORT).show();
+                            showCustomToast(Edit_profile.this,"Authentication failed.","error");
                         }
                     });
                 });
@@ -206,7 +203,7 @@ public class Edit_profile extends AppCompatActivity {
             if (!newUsername.isEmpty()) {
                 updateUsername(newUsername);
             } else {
-                Toast.makeText(Edit_profile.this, "Please enter a username.", Toast.LENGTH_SHORT).show();
+                showCustomToast(Edit_profile.this,"Username cannot be empty.","error");
             }
         });
 
@@ -217,7 +214,7 @@ public class Edit_profile extends AppCompatActivity {
             if (!newPassword.isEmpty() && newPassword.equals(rePassword)) {
                 updatePassword(newPassword);
             } else {
-                Toast.makeText(Edit_profile.this, "Passwords do not match or are empty.", Toast.LENGTH_SHORT).show();
+                showCustomToast(Edit_profile.this,"Password do not match.","error");
             }
         });
 
@@ -235,7 +232,7 @@ public class Edit_profile extends AppCompatActivity {
             if (task.isSuccessful()) {
                 deleteUserAccount(user);
             } else {
-                Toast.makeText(Edit_profile.this, "Failed to delete user data. Please try again.", Toast.LENGTH_SHORT).show();
+                showCustomToast(Edit_profile.this,"Failed to delete user data.","error");
             }
         });
     }
@@ -243,10 +240,10 @@ public class Edit_profile extends AppCompatActivity {
     private void deleteUserAccount(FirebaseUser user) {
         user.delete().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                Toast.makeText(Edit_profile.this, "Account deleted successfully.", Toast.LENGTH_SHORT).show();
+                showCustomToast(Edit_profile.this,"Account deleted successfully.","success");
                 logoutAndRedirect();
             } else {
-                Toast.makeText(Edit_profile.this, "Failed to delete account. Please try again.", Toast.LENGTH_SHORT).show();
+                showCustomToast(Edit_profile.this,"Failed to delete account.","error");
             }
         });
     }
@@ -281,6 +278,7 @@ public class Edit_profile extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 // Handle the error
                 Log.e("Edit_profile", "Error fetching data", databaseError.toException());
+                showCustomToast(Edit_profile.this,"Error fetching data id:281","error");
 
                 // Stop the refreshing animation
                 swipeRefreshLayout.setRefreshing(false);
@@ -311,7 +309,7 @@ public class Edit_profile extends AppCompatActivity {
                 // Get the original file name
                 String originalFileName = getFileName(uriImage);
 
-                Toast.makeText(this, "Uploading picture may take some time ...", Toast.LENGTH_SHORT).show();
+                showCustomToast(Edit_profile.this,"Uploading image...","default");
 
                 // Upload profile pic with the original file name
                 StorageReference fileReference = storageReference.child(Objects.requireNonNull(originalFileName));
@@ -328,19 +326,19 @@ public class Edit_profile extends AppCompatActivity {
                         user.updateProfile(profileChangeRequest);
                     });
                     progressDialog.dismiss();
-                    Toast.makeText(Edit_profile.this, "Updated profile ", Toast.LENGTH_SHORT).show();
+                    showCustomToast(Edit_profile.this,"Profile picture updated successfully.","success");
                     Intent intent = new Intent("com.sandesh.note_app.PROFILE_UPDATED");
                     LocalBroadcastManager.getInstance(Edit_profile.this).sendBroadcast(intent);
 
                 }).addOnFailureListener(e -> {
                     progressDialog.dismiss();
-                    Toast.makeText(Edit_profile.this, "Failed to upload picture", Toast.LENGTH_SHORT).show();
+                    showCustomToast(Edit_profile.this,"Failed to upload image.","error");
                 }).addOnProgressListener(snapshot -> {
                     double progress = (100.0 * snapshot.getBytesTransferred()) / snapshot.getTotalByteCount();
                     progressDialog.setMessage("Uploaded: " + (int) progress + "%");
                 });
             } else {
-                Toast.makeText(this, "Please select a picture", Toast.LENGTH_SHORT).show();
+                showCustomToast(Edit_profile.this,"Please select an image.","error");
             }
         }
 
@@ -405,10 +403,10 @@ public class Edit_profile extends AppCompatActivity {
                             // Update cache
                             String email = user.getEmail(); // Fetch the current email from user profile
                             saveUserDataToCache(newUsername, email);
-                            Toast.makeText(Edit_profile.this, "Username updated successfully!", Toast.LENGTH_SHORT).show();
+                            showCustomToast(Edit_profile.this,"Username updated successfully!","success");
                             n_username.setText("");
                         } else {
-                            Toast.makeText(Edit_profile.this, "Error updating username.", Toast.LENGTH_SHORT).show();
+                            showCustomToast(Edit_profile.this,"Error updating username.","error");
                         }
                     });
         }
@@ -418,12 +416,12 @@ public class Edit_profile extends AppCompatActivity {
         Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).updatePassword(newPassword)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        Toast.makeText(Edit_profile.this, "Password updated successfully!", Toast.LENGTH_SHORT).show();
+                        showCustomToast(Edit_profile.this,"Password updated successfully!","success");
                         n_passwd.setText("");
                         r_passwd.setText("");
 
                     } else {
-                        Toast.makeText(Edit_profile.this, "Error updating password.", Toast.LENGTH_SHORT).show();
+                        showCustomToast(Edit_profile.this,"Error updating password.","error");
                     }
                 });
     }
@@ -434,21 +432,33 @@ public class Edit_profile extends AppCompatActivity {
         try (FileOutputStream fos = new FileOutputStream(file)) {
             fos.write((username + "\n" + email).getBytes());
         } catch (IOException e) {
-            Toast.makeText(this, "Internel error !!", Toast.LENGTH_SHORT).show();
+            showCustomToast(Edit_profile.this,"Internel error 437!!","error");
         }
     }
 
-    private void showCustomToast(Context context, String message) {
+    private void showCustomToast(Context context, String message, String messageType) {
         // Inflate the custom toast layout
         LayoutInflater inflater = getLayoutInflater();
         View toastLayout = inflater.inflate(R.layout.custom_toast, findViewById(R.id.custm_toast));
 
-        // Set the text and image in the custom toast layout
+        LottieAnimationView lottieAnimationView = toastLayout.findViewById(R.id.toast_anim);
         TextView toastText = toastLayout.findViewById(R.id.toast_text);
-//        ImageView toastImage = toastLayout.findViewById(R.id.toast_image);
-
         toastText.setText(message);
-//        toastImage.setImageResource(R.drawable.google); // Set your desired image
+
+        switch (messageType.toLowerCase()) {
+            case "error":
+                toastText.setTextColor(ContextCompat.getColor(context, R.color.red));
+                lottieAnimationView.setVisibility(View.VISIBLE);
+                break;
+            case "success":
+                toastText.setTextColor(ContextCompat.getColor(context, R.color.success_color));
+                lottieAnimationView.setVisibility(View.GONE);
+                break;
+            default:
+                toastText.setTextColor(ContextCompat.getColor(context, R.color.white));
+                lottieAnimationView.setVisibility(View.GONE);
+                break;
+        }
 
         // Create and display the toast
         Toast toast = new Toast(context);

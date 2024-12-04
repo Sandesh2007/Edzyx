@@ -30,46 +30,43 @@
         android:textStyle="bold" />
 
     <!-- Facebook Link -->
-    <TextView
+    <!-- Facebook Link ImageView -->
+    <ImageView
         android:id="@+id/facebook_link"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/jetbrainsmono"
-        android:textColor="@android:color/holo_blue_bright"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
+        android:src="@drawable/facebook"
+        android:contentDescription="@string/facebook"
         android:clickable="true"
-        android:focusable="true"
-        android:textSize="16sp"
-        app:drawableStartCompat="@drawable/facebook" />
+        android:focusable="true" />
 
-<!-- Instagram Link -->
-<TextView
-    android:id="@+id/instagram_link"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textColor="@android:color/holo_blue_bright"
-    android:paddingTop="8dp"
-    android:paddingBottom="16dp"
-    android:fontFamily="@font/jetbrainsmono"
-    android:clickable="true"
-    android:focusable="true"
-    android:textSize="16sp"
-    app:drawableStartCompat="@drawable/instagram" />
+    <!-- Instagram Link ImageView -->
+    <ImageView
+        android:id="@+id/instagram_link"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:paddingBottom="16dp"
+        android:src="@drawable/instagram"
+        android:contentDescription="@string/instagram"
+        android:clickable="true"
+        android:focusable="true" />
 
-    <TextView
+    <!-- GitHub Repo ImageView -->
+    <ImageView
         android:id="@+id/github_repo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/github"
-        android:textColor="@android:color/holo_blue_bright"
+        android:paddingBottom="24dp"
+        android:src="@drawable/github"
+        android:contentDescription="@string/github"
         android:clickable="true"
-        android:focusable="true"
-        android:fontFamily="@font/jetbrainsmono"
-        android:textSize="16sp"
-        android:paddingBottom="24dp" />
+        android:focusable="true" />
 
-<!-- Bug/Crash Report -->
+
+    <!-- Bug/Crash Report -->
 <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -104,9 +101,7 @@
         android:id="@+id/current_version"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/current_version"
         android:textSize="16sp"
         android:fontFamily="@font/seg_ui_semibold"
         android:paddingBottom="16dp" />
-
 </LinearLayout>

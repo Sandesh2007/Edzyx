@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/theme_switcher"
+    android:backgroundTint="@color/primary_bg_light"
+    android:padding="16dp"
+    tools:context=".theme_switcher">
+
+        <RadioGroup
+            android:id="@+id/theme_radio_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:id="@+id/radio_light"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/primary_text_light"
+                    android:text="@string/light_mode" />
+
+                <RadioButton
+                    android:id="@+id/radio_dark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/primary_text_light"
+                    android:text="@string/dark_mode" />
+
+                <RadioButton
+                    android:id="@+id/radio_system"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/primary_text_light"
+                    android:text="@string/system_default" />
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/color_picker_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pick_color"
+            android:backgroundTint="@color/button_clr"
+            android:textColor="@color/secondary_text"
+            android:layout_marginTop="16dp" />
+</LinearLayout>

@@ -1,10 +1,16 @@
 package com.sandesh.note_app;
+
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +24,8 @@ import org.json.JSONException;
 
 public class about extends AppCompatActivity {
     String C_versionName;
+    String latestVersion;
+
 
     private static final String VERSION_URL = "https://github.com/Sandesh2007/Edzyx/raw/main/version.json";
 
@@ -26,24 +34,32 @@ public class about extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
 
+        ImageView githubRepo = findViewById(R.id.github_repo);
+
+
         // Display the current app version
         try {
            C_versionName = getApplicationContext().getPackageManager().getPackageInfo(getApplicationContext().getPackageName(), 0).versionName;
         } catch (PackageManager.NameNotFoundException e) {
             throw new RuntimeException(e);
         }
+
         TextView currentVersion = findViewById(R.id.current_version);
-        currentVersion.setText("Current Version: " + "v"+C_versionName);
+        currentVersion.setText("Current version: v"+C_versionName);
+
+        if (isDarkMode()) {
+            githubRepo.setImageResource(R.drawable.github_icon_dark);
+        }
 
         // Facebook Link
-        TextView facebookLink = findViewById(R.id.facebook_link);
+        ImageView facebookLink = findViewById(R.id.facebook_link);
         facebookLink.setOnClickListener(v -> {
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/profile.php?id=100060033657219"));
             startActivity(browserIntent);
         });
 
         // Instagram Link
-        TextView instagramLink = findViewById(R.id.instagram_link);
+        ImageView instagramLink = findViewById(R.id.instagram_link);
         instagramLink.setOnClickListener(v -> {
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://instagram.com/sandesh_sharma07/"));
             startActivity(browserIntent);
@@ -56,9 +72,8 @@ public class about extends AppCompatActivity {
             startActivity(browserIntent);
         });
 
-        TextView githubRepo = findViewById(R.id.github_repo);
         githubRepo.setOnClickListener(view -> {
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/Sandesh2007/Edzyx/"));
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/Sandesh2007/"));
             startActivity(browserIntent);
         });
 
@@ -73,14 +88,14 @@ public class about extends AppCompatActivity {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, VERSION_URL, null,
                 response -> {
                     try {
-                        String latestVersion = response.getString("version");
+                        latestVersion = response.getString("version");
                         String apkUrl = response.getString("apk_url");
 
                         if (!C_versionName.equals(latestVersion)) {
-                            promptUpdate(apkUrl);
+                            showUpdateDialog(apkUrl);
                         } else {
                             // No update available
-                            Toast.makeText(this, "App is at latest version", Toast.LENGTH_SHORT).show();
+                            showCustomToast(about.this,"App is at latest version.");
                         }
 
                     } catch (JSONException e) {
@@ -90,19 +105,72 @@ public class about extends AppCompatActivity {
 
         queue.add(jsonObjectRequest);
     }
+    public boolean isDarkMode() {
+        int nightModeFlags =
+                getResources().getConfiguration().uiMode &
+                        Configuration.UI_MODE_NIGHT_MASK;
+        switch (nightModeFlags) {
+            case Configuration.UI_MODE_NIGHT_YES:
+                return true;
+            case Configuration.UI_MODE_NIGHT_NO:
+            case Configuration.UI_MODE_NIGHT_UNDEFINED:
+                return false;
+            default:
+                return false;
+        }
+    }
 
-    private void promptUpdate(final String apkUrl) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Update Available")
-                .setMessage("A new version of the app is available. Would you like to update?")
-                .setPositiveButton("Yes", (dialog, id) -> {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(apkUrl));
-                    startActivity(intent);
-                })
-                .setNegativeButton("No", (dialog, id) -> {
-                    // User canceled the dialog
-                    Toast.makeText(this, "Update cancled by user!!", Toast.LENGTH_SHORT).show();
-                });
-        builder.create().show();
+    private void showUpdateDialog(final  String apkUrl) {
+
+        // Inflate the custom dialog layout
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.custom_dialogue2, null);
+
+        // Find the TextViews and Buttons in the dialog layout
+        TextView updateInfo = dialogView.findViewById(R.id.update_info);
+        TextView updateDetails = dialogView.findViewById(R.id.update_details);
+        TextView info = dialogView.findViewById(R.id.info);
+        Button cancelButton = dialogView.findViewById(R.id.btn_cancel);
+        Button confirmButton = dialogView.findViewById(R.id.btn_confirm);
+
+        //set info about update
+        updateInfo.setText("Update Available v"+latestVersion);
+        updateDetails.setText(R.string.update_available);
+        info.setText(R.string.update_info);
+
+        // Create the dialog builder
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.CustomDialogTheme);
+        builder.setView(dialogView);
+        AlertDialog dialog=builder.create();;
+
+        // Set dialog title
+        builder.setTitle("Update Available");
+
+        // Set Cancel button behavior
+        cancelButton.setOnClickListener(v -> {
+            showCustomToast(about.this,"Update cancled by user!!");
+            dialog.dismiss();
+        });
+
+        // Set Confirm button behavior
+        confirmButton.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(apkUrl));
+            startActivity(intent);
+            dialog.dismiss();
+        });
+
+        // Create and show the dialog
+        dialog.show();
+    }
+
+    private void showCustomToast(Context context, String message) {
+        LayoutInflater inflater = getLayoutInflater();
+        View toastLayout = inflater.inflate(R.layout.custom_toast, findViewById(R.id.custm_toast));
+        TextView toastText = toastLayout.findViewById(R.id.toast_text);
+        toastText.setText(message);
+        Toast toast = new Toast(context);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(toastLayout); // Set custom view
+        toast.show();
     }
 }
